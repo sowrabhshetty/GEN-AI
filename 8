@@ -1,0 +1,18 @@
+import os
+from langchain.llms import Cohere
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+with open(r'C:\Users\SOUR\OneDrive\Desktop\readme.txt', 'r') as f:
+    doc = f.read()
+os.environ["COHERE_API_KEY"] = "BhoMYAWjRbqQLXSqMlasdMesvnqPVPQf9uBwFDbw"
+llm = Cohere(cohere_api_key=os.getenv("COHERE_API_KEY"))
+prompt = PromptTemplate.from_template("""
+You are a helpful assistant.
+Given the following document, summarize it in **bullet points**:
+---
+{document}
+---
+Summary:
+""")
+response = LLMChain(llm=llm, prompt=prompt).run(document=doc)
+print(response)
